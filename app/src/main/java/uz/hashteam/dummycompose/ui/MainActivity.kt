@@ -69,7 +69,7 @@ fun DummyComposeApp(modifier: Modifier = Modifier) {
                 }
             ) {
                 val activity = (LocalContext.current as? Activity)
-                val actionLabel by rememberUpdatedState(newValue = stringResource(id = R.string.reminders))
+
                 EmployeesScreen(
                     systemBackButtonClicked = { activity?.finish() },
                     onClick = {
