@@ -72,7 +72,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
     implementation("androidx.navigation:navigation-compose:2.7.3")
-
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
 
     // -- Room
@@ -96,11 +96,17 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+    implementation("com.squareup.moshi:moshi:1.14.0")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
 
     // -- DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // -- Swipe layout
     implementation("me.saket.swipe:swipe:1.2.0")
+
+    // Image Loading
+    val coilVersion = "2.4.0"
+    implementation("io.coil-kt:coil-compose:$coilVersion")
 
 }

@@ -2,8 +2,7 @@ package uz.hashteam.dummycompose.data.remote.dto
 import com.squareup.moshi.JsonClass
 
 import com.squareup.moshi.Json
-
-
+import uz.hashteam.dummycompose.domain.model.Employee
 
 @JsonClass(generateAdapter = true)
 data class EmployeeDto(
@@ -18,3 +17,12 @@ data class EmployeeDto(
     @Json(name = "profile_image")
     val profileImage: String? = ""
 )
+    fun EmployeeDto.toDomain(): Employee {
+        return Employee(
+            id = this.id,
+            age = this.employeeAge,
+            name = this.employeeName,
+            salary = this.employeeSalary,
+            image = this.profileImage
+        )
+}

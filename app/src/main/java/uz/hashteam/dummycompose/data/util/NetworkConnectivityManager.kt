@@ -1,4 +1,4 @@
-package com.raghav.spacedawnv2.data.util
+package uz.hashteam.dummycompose.data.util
 
 import android.content.Context
 import android.net.ConnectivityManager

@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class GetByIdUseCase @Inject constructor(private val repository: DummyRepository) {
 
-    suspend operator fun invoke(): Flow<Resource<List<Employee>>> {
-        return repository.getAll()
+    suspend operator fun invoke(id: Int): Flow<Resource<Employee>> {
+        return repository.getById(id)
     }
 
 }

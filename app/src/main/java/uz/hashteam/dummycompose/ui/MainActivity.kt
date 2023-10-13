@@ -3,6 +3,7 @@ package uz.hashteam.dummycompose.ui
 import android.app.Activity
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -33,8 +34,8 @@ import uz.hashteam.dummycompose.ui.theme.spacing
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContent {
             DummyTheme {
                 // A surface container using the 'background' color from the theme
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
 
 @Composable

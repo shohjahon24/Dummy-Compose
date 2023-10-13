@@ -16,7 +16,8 @@ val Pink40 = Color(0xFF7D5260)
 
 data class Colors(
     val Green: Color = Color(0xFF009900),
-    val Yellow: Color = Color(0xFFb3b300)
+    val Yellow: Color = Color(0xFFb3b300),
+    val Blue: Color = Color(0xFF003CB3),
 )
 
 val LocalColors = staticCompositionLocalOf { Colors() }

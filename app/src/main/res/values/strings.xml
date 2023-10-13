@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dummy Compose</string>
+    <string name="no_employees">No Employees</string>
 </resources>

@@ -10,14 +10,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.hashteam.dummycompose.domain.usecase.GetAllUseCase
 import uz.hashteam.dummycompose.domain.util.Resource
+import javax.inject.Inject
 
 @HiltViewModel
-class EmployeesViewModel(
+class EmployeesViewModel @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val getAllUseCase: GetAllUseCase
 ): ViewModel() {
@@ -38,7 +41,7 @@ class EmployeesViewModel(
     private fun getEmployees() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-            getAllUseCase().collectLatest { result ->
+            getAllUseCase().collect { result ->
                 when(result) {
                     is  Resource.Error -> {
                         _uiState.update {
@@ -51,7 +54,7 @@ class EmployeesViewModel(
                     }
                     is  Resource.Success -> {
                         _uiState.update { it.copy(
-                            employees = it.employees.toMutableList(),
+                            employees = result.data?.toMutableList() ?: mutableListOf(),
                             isLoading = false,
                             errorMessage = null) }
                     }

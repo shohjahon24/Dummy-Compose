@@ -22,10 +22,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitClient(interceptor: NetworkInterceptor): OkHttpClient {
+    fun provideRetrofitClient(): OkHttpClient {
         val logging = HttpLoggingInterceptor()
         val level = logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-        return OkHttpClient.Builder().addInterceptor(interceptor)
+        return OkHttpClient.Builder()
             .addInterceptor(level)
             .build()
     }
