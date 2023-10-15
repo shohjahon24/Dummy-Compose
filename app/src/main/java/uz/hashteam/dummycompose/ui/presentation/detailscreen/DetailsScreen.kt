@@ -26,7 +26,6 @@ fun DetailsScreen(
     systemBackButtonClicked: () -> Unit,
 ) {
 
-    Log.d("DDDD", "DetailsScreen: $userId")
     viewModel.onTriggerEvent(DetailsScreenEvent.Get(userId))
     val state = viewModel.uiState.collectAsStateWithLifecycle().value
 
