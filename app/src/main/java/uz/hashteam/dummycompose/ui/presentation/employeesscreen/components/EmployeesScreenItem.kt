@@ -3,11 +3,8 @@ package uz.hashteam.dummycompose.ui.presentation.employeesscreen.components
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.Delete
@@ -16,10 +13,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
@@ -35,7 +30,6 @@ fun EmployeesScreenItem(
     onEdit: (Int) -> Unit,
     onClick: (Int) -> Unit
 ) {
-
 
     val remove = SwipeAction(
         icon = rememberVectorPainter(Icons.TwoTone.Delete),
@@ -63,7 +57,9 @@ fun EmployeesScreenItem(
             employee.image?.let {
                 CircularImage(imageUrl = it, widthFraction = 0.35f)
             }
-            EmployeeContent(employee = employee)
+            EmployeeContent(
+                employee = employee
+            )
         }
     }
 }

@@ -1,6 +1,8 @@
 package uz.hashteam.dummycompose.ui.presentation.employeesscreen
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -16,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.core.os.bundleOf
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import uz.hashteam.dummycompose.R
 import uz.hashteam.dummycompose.ui.presentation.employeesscreen.components.EmployeesScreenItem
 import uz.hashteam.dummycompose.ui.theme.spacing
@@ -28,12 +32,12 @@ fun EmployeesScreen(
     modifier: Modifier = Modifier,
     viewModel: EmployeesViewModel = hiltViewModel(),
     systemBackButtonClicked: () -> Unit,
-    onRemove: (Int) -> Unit,
-    onEdit: (Int) -> Unit,
-    onClick: (Int) -> Unit
+    navController: NavController
 ) {
 
     val state = viewModel.uiState.collectAsStateWithLifecycle().value
+
+
 
     Box(modifier = modifier.fillMaxSize()) {
         if (state.employees.isNotEmpty()) {
@@ -43,7 +47,14 @@ fun EmployeesScreen(
                     .padding(top = MaterialTheme.spacing.small)
             ) {
                 items(state.employees) { item ->
-                    EmployeesScreenItem(employee = item, onRemove, onEdit, onClick)
+                    EmployeesScreenItem(employee = item,
+                        onRemove = {},
+                        onEdit = {},
+                        onClick = {
+
+                            navController.navigate("detail/${it}")
+                        }
+                    )
                     Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
                 }
             }

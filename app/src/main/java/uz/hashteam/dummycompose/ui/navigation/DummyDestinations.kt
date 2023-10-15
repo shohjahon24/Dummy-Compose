@@ -21,7 +21,7 @@ object EmployeesScreen : Destination {
 }
 
 object DetailScreen : Destination {
-    override val route = "detail"
+    override val route = "detail/{userId}"
     override val label = "Detail"
     override val icon = Icons.Default.Notifications
 }
