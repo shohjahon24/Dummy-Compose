@@ -83,7 +83,8 @@ fun DummyComposeApp(modifier: Modifier = Modifier) {
             ) {
                 it.arguments?.getString("userId")?.let { it1 ->
                     DetailsScreen(
-                        systemBackButtonClicked = { activity?.finish() }, userId = it1.toInt(),
+                        navController = navController,
+                        userId = it1.toInt(),
                     )
                 }
             }

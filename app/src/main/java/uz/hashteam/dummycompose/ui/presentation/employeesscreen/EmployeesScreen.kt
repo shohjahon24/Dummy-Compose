@@ -15,6 +15,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -47,15 +48,20 @@ fun EmployeesScreen(
                     .padding(top = MaterialTheme.spacing.small)
             ) {
                 items(state.employees) { item ->
-                    EmployeesScreenItem(employee = item,
-                        onRemove = {},
-                        onEdit = {},
-                        onClick = {
-
-                            navController.navigate("detail/${it}")
-                        }
-                    )
-                    Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                    key(item.id) {
+                        EmployeesScreenItem(employee = item,
+                            onRemove = {
+                                viewModel.onTriggerEvent(EmployeesScreenEvent.Remove(it))
+                            },
+                            onEdit = {
+                                navController.navigate("detail/${it}")
+                            },
+                            onClick = {
+                                navController.navigate("detail/${it}")
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
+                    }
                 }
             }
         } else {

@@ -34,14 +34,14 @@ fun EmployeesScreenItem(
     val remove = SwipeAction(
         icon = rememberVectorPainter(Icons.TwoTone.Delete),
         background = MaterialTheme.colors.Green,
-        onSwipe = { employee.id?.let { onEdit.invoke(it) } }
+        onSwipe = { employee.id?.let { onRemove.invoke(it) } }
     )
 
     val edit = SwipeAction(
         icon = rememberVectorPainter(Icons.TwoTone.Edit),
         background = MaterialTheme.colors.Yellow,
         isUndo = true,
-        onSwipe = { employee.id?.let { onRemove.invoke(it) } },
+        onSwipe = { employee.id?.let { onEdit.invoke(it) } },
     )
 
     SwipeableActionsBox(

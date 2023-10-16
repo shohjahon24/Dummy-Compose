@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -28,11 +29,11 @@ import uz.hashteam.dummycompose.ui.theme.spacing
  * @param modifier Optional Modifier
  */
 @Composable
-fun CircularImage(imageUrl: String, widthFraction: Float, modifier: Modifier = Modifier) {
+fun CircularImage(imageUrl: String, widthFraction: Float, modifier: Modifier = Modifier, width: Dp = 50.dp,  height: Dp = 50.dp,) {
     Box(
         modifier = modifier
-            .width(50.dp)
-            .height(50.dp)
+            .width(width)
+            .height(height)
             .padding(start = MaterialTheme.spacing.small)
     ) {
         AsyncImage(

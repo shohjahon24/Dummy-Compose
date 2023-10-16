@@ -12,5 +12,5 @@ interface DummyRepository {
 
     suspend fun delete(id: Int)
 
-    suspend fun update(id: Int)
+    suspend fun update(employee: Employee)
 }

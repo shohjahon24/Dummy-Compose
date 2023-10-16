@@ -1,6 +1,7 @@
 package uz.hashteam.dummycompose.data.remote
 
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -21,7 +22,7 @@ interface DummyApi {
     suspend fun create(employeeDto: EmployeeDto)
 
     @PUT("update/{id}")
-    suspend fun update(@Path("id") id: Int)
+    suspend fun update(@Path("id") id: Int, @Body employeeDto: EmployeeDto)
 
     @DELETE("delete/{id}")
     suspend fun delete(@Path("id") id: Int)

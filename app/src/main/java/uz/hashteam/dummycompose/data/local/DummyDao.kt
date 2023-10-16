@@ -27,8 +27,8 @@ interface DummyDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateEmployee(employee: Employee)
 
-    @Delete
-    suspend fun removeEmployee(employee: Employee)
+    @Query("Delete From employee where id = :id")
+    suspend fun removeEmployee(id: Int)
 
 
 }

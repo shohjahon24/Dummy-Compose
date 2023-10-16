@@ -3,6 +3,7 @@ package uz.hashteam.dummycompose.data.repository
 import kotlinx.coroutines.flow.Flow
 import uz.hashteam.dummycompose.data.local.DummyDao
 import uz.hashteam.dummycompose.data.remote.DummyApi
+import uz.hashteam.dummycompose.data.remote.dto.EmployeeDto
 import uz.hashteam.dummycompose.data.remote.dto.toDomain
 import uz.hashteam.dummycompose.data.util.NetworkConnectivityManager
 import uz.hashteam.dummycompose.data.util.networkBoundResource
@@ -36,11 +37,18 @@ class DummyRepositoryImpl @Inject constructor(
     )
 
     override suspend fun delete(id: Int) {
-        dummyApi.delete(id)
+        dummyDao.removeEmployee(id)
+        // call api
+        // dummyApi.delete(id)
     }
 
-    override suspend fun update(id: Int) {
-        dummyApi.update(id)
+    override suspend fun update(employee: Employee) {
+        employee.id?.let {
+            dummyDao.updateEmployee(employee)
+            // call api
+          //  dummyApi.update(it, EmployeeDto(employeeName = employee.name, employeeSalary = employee.salary, employeeAge = employee.age))
+
+        }
     }
 
 }

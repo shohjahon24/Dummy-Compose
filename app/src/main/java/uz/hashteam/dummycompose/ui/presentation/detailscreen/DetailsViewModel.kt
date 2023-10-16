@@ -15,16 +15,22 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import uz.hashteam.dummycompose.domain.model.Employee
 import uz.hashteam.dummycompose.domain.usecase.GetAllUseCase
 import uz.hashteam.dummycompose.domain.usecase.GetByIdUseCase
+import uz.hashteam.dummycompose.domain.usecase.RemoveUseCase
+import uz.hashteam.dummycompose.domain.usecase.UpdateUseCase
 import uz.hashteam.dummycompose.domain.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val getByIdUseCase: GetByIdUseCase
-): ViewModel() {
+    private val getByIdUseCase: GetByIdUseCase,
+    private val removeUseCase: RemoveUseCase,
+    private val updateUseCase: UpdateUseCase,
+
+    ): ViewModel() {
 
     private val _uiState: MutableStateFlow<DetailsScreenState> =
         MutableStateFlow(DetailsScreenState())
@@ -36,6 +42,8 @@ class DetailsViewModel @Inject constructor(
     fun onTriggerEvent(event: DetailsScreenEvent) {
         when(event) {
             is DetailsScreenEvent.Get -> getEmployee(event.id)
+            is DetailsScreenEvent.Update -> update(event.employee)
+            is DetailsScreenEvent.Remove -> remove(event.id)
         }
     }
 
@@ -61,6 +69,18 @@ class DetailsViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun remove(id: Int) {
+        viewModelScope.launch {
+          removeUseCase.invoke(id)
+        }
+    }
+
+    private fun update(employee: Employee) {
+        viewModelScope.launch {
+            updateUseCase.invoke(employee)
         }
     }
 

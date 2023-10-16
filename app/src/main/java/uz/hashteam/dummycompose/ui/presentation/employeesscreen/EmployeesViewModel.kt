@@ -10,21 +10,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uz.hashteam.dummycompose.domain.usecase.GetAllUseCase
+import uz.hashteam.dummycompose.domain.usecase.RemoveUseCase
 import uz.hashteam.dummycompose.domain.util.Resource
 import javax.inject.Inject
 
 @HiltViewModel
 class EmployeesViewModel @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val getAllUseCase: GetAllUseCase
+    private val getAllUseCase: GetAllUseCase,
+    private val removeUseCase: RemoveUseCase,
 ): ViewModel() {
-
 
     private val _uiState: MutableStateFlow<EmployeesScreenState> =
         MutableStateFlow(EmployeesScreenState())
@@ -38,12 +36,19 @@ class EmployeesViewModel @Inject constructor(
         getEmployees()
     }
 
+    fun onTriggerEvent(event: EmployeesScreenEvent) {
+        when(event) {
+           is EmployeesScreenEvent.Remove -> remove(event.id)
+           is EmployeesScreenEvent.GetAll -> getEmployees()
+        }
+    }
+
     private fun getEmployees() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             getAllUseCase().collect { result ->
                 when(result) {
-                    is  Resource.Error -> {
+                    is Resource.Error -> {
                         _uiState.update {
                             it.copy(
                                 isLoading = false,
@@ -52,13 +57,26 @@ class EmployeesViewModel @Inject constructor(
                             )
                         }
                     }
-                    is  Resource.Success -> {
+                    is Resource.Success -> {
                         _uiState.update { it.copy(
                             employees = result.data?.toMutableList() ?: mutableListOf(),
                             isLoading = false,
                             errorMessage = null) }
                     }
                 }
+            }
+        }
+    }
+
+    private fun remove(id: Int) {
+        viewModelScope.launch {
+            removeUseCase.invoke(id)
+            _uiState.update { it ->
+                it.copy(
+                    isLoading = false,
+                    errorMessage = null,
+                    employees = it.employees.filter { it.id != id }.toMutableList() ?: mutableListOf(),
+                )
             }
         }
     }
